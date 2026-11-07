@@ -1,6 +1,6 @@
 # Rota do Excedente
 
-**Demo:** https://gabrielavsdoria.github.io/rota-do-excedente/
+**Demo:** https://gabriela-doria.github.io/rota-do-excedente/
 
 > Comida sobrando de um lado e faltando do outro é, antes de tudo, um problema de **logística**.
 
@@ -67,4 +67,4 @@ Construído com IA a partir do case que apresentei: o Claude como agente de cód
 
 ---
 
-Feito por [Gabriela Dória](https://github.com/gabrielavsdoria) · Licença [MIT](LICENSE)
+Feito por [Gabriela Dória](https://github.com/gabriela-doria) · Licença [MIT](LICENSE)
