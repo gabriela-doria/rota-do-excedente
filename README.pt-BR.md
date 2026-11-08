@@ -10,7 +10,7 @@ Protótipo que agrupa restaurantes com excedente de comida em rotas até cozinha
 
 ## Por que existe
 
-Ideia que desenvolvi para o Desafio IA do processo seletivo de estágio do iFood (out/2026) e depois transformei em protótipo funcional.
+Ideia que desenvolvi para um desafio de IA (out/2026) e depois transformei em protótipo funcional.
 
 - **24,2%** dos lares brasileiros estavam em insegurança alimentar em 2024 ([IBGE](https://agenciadenoticias.ibge.gov.br/pt/agencia-noticias/44728-mais-de-dois-milhoes-de-lares-saem-da-inseguranca-alimentar-em-2024.html)).
 - **28%** do desperdício de alimentos no mundo acontece em *food service*, isto é, restaurantes, padarias e similares ([PNUMA, Food Waste Index 2024](https://www.unep.org/pt-br/noticias-e-reportagens/comunicado-de-imprensa/mundo-joga-fora-mais-de-1-bilhao-de-refeicoes-por-dia)).

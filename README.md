@@ -10,7 +10,7 @@ A prototype that groups restaurants with surplus food into routes to community k
 
 ## Why it exists
 
-I developed this idea for the AI Challenge in iFood's internship hiring process (Oct 2026) and then turned it into a working prototype.
+I developed this idea for an AI challenge (Oct 2026) and then turned it into a working prototype.
 
 - **24.2%** of Brazilian households were food insecure in 2024 ([IBGE](https://agenciadenoticias.ibge.gov.br/pt/agencia-noticias/44728-mais-de-dois-milhoes-de-lares-saem-da-inseguranca-alimentar-em-2024.html)).
 - **28%** of global food waste happens in *food service*: restaurants, bakeries and similar ([UNEP, Food Waste Index 2024](https://www.unep.org/pt-br/noticias-e-reportagens/comunicado-de-imprensa/mundo-joga-fora-mais-de-1-bilhao-de-refeicoes-por-dia)).
