@@ -1,70 +1,72 @@
-# Rota do Excedente
+# Rota do Excedente (Surplus Route)
+
+**English** · [Português](README.pt-BR.md)
 
 **Demo:** https://gabriela-doria.github.io/rota-do-excedente/
 
-> Comida sobrando de um lado e faltando do outro é, antes de tudo, um problema de **logística**.
+> Food going to waste on one side and missing on the other is, first of all, a **logistics** problem.
 
-Protótipo que agrupa restaurantes com excedente de comida em rotas até cozinhas solidárias, para um entregador fazer no **horário de vale** entre o almoço e o jantar (15h–18h).
+A prototype that groups restaurants with surplus food into routes to community kitchens, so one courier can run each route during the **off-peak window** between lunch and dinner (3–6 pm).
 
-## Por que existe
+## Why it exists
 
-Ideia que desenvolvi para o Desafio IA do processo seletivo de estágio do iFood (out/2026) e depois transformei em protótipo funcional.
+I developed this idea for the AI Challenge in iFood's internship hiring process (Oct 2026) and then turned it into a working prototype.
 
-- **24,2%** dos lares brasileiros estavam em insegurança alimentar em 2024 ([IBGE](https://agenciadenoticias.ibge.gov.br/pt/agencia-noticias/44728-mais-de-dois-milhoes-de-lares-saem-da-inseguranca-alimentar-em-2024.html)).
-- **28%** do desperdício de alimentos no mundo acontece em *food service*, isto é, restaurantes, padarias e similares ([PNUMA, Food Waste Index 2024](https://www.unep.org/pt-br/noticias-e-reportagens/comunicado-de-imprensa/mundo-joga-fora-mais-de-1-bilhao-de-refeicoes-por-dia)).
-- Iniciativas de doação já existem. Minha tese: o recurso que falta às cozinhas solidárias é **transporte**. Uma plataforma de delivery tem entregadores na rua e, **por hipótese**, capacidade ociosa no vale.
+- **24.2%** of Brazilian households were food insecure in 2024 ([IBGE](https://agenciadenoticias.ibge.gov.br/pt/agencia-noticias/44728-mais-de-dois-milhoes-de-lares-saem-da-inseguranca-alimentar-em-2024.html)).
+- **28%** of global food waste happens in *food service*: restaurants, bakeries and similar ([UNEP, Food Waste Index 2024](https://www.unep.org/pt-br/noticias-e-reportagens/comunicado-de-imprensa/mundo-joga-fora-mais-de-1-bilhao-de-refeicoes-por-dia)).
+- Donation initiatives already exist. My thesis: what community kitchens lack is **transport**. A delivery platform has couriers on the street and, **as a hypothesis**, idle capacity in the off-peak window.
 
-## Como funciona
+## How it works
 
-1. Até as 15h, cada restaurante informa "tenho excedente hoje" e quantos kg.
-2. O algoritmo agrupa 2 a 8 restaurantes próximos numa rota até a cozinha solidária mais perto.
-3. Um entregador faz a rota no vale e recebe por rota.
-4. O painel mostra kg resgatados, km, custo por kg e se a rota se paga.
+1. By 3 pm, each restaurant reports "I have surplus today" and how many kg.
+2. The algorithm groups 2 to 8 nearby restaurants into a route to the nearest community kitchen.
+3. A courier runs the route off-peak and is paid per route.
+4. The dashboard shows kg rescued, km, cost per kg and whether the route pays off.
 
-### Algoritmo
+### Algorithm
 
-| Passo | Método |
+| Step | Method |
 |---|---|
-| Atribuição | Cada restaurante vai para a cozinha mais próxima. |
-| Agrupamento | *Sweep*: ordena os restaurantes por ângulo em volta da cozinha e fecha uma rota quando bate a capacidade (kg) ou o máximo de paradas. |
-| Ordem das paradas | Vizinho mais próximo, refinado com *2-opt*. A rota termina na cozinha. |
-| Distância | Haversine × 1,3 (fator de ruas). |
-| Tempo | Deslocamento na velocidade média + minutos por parada; alerta se passar da janela do vale. |
-| Critério para desistir | Se o **custo por kg** da rota passar do custo de a cozinha **comprar** o alimento, a rota não se paga. |
+| Assignment | Each restaurant goes to the nearest kitchen. |
+| Clustering | *Sweep*: sorts restaurants by angle around the kitchen and closes a route when it hits capacity (kg) or the stop limit. |
+| Stop order | Nearest neighbor, refined with *2-opt*. The route ends at the kitchen. |
+| Distance | Haversine × 1.3 (street factor). |
+| Time | Travel at average speed + minutes per stop; warning if it goes past the off-peak window. |
+| Stop criterion | If the route's **cost per kg** exceeds what the kitchen would pay to **buy** the food, the route doesn't pay off. |
 
-Tudo roda no navegador, num único `index.html` com [Leaflet](https://leafletjs.com/) e OpenStreetMap. Sem backend e sem dados reais.
+Everything runs in the browser, in a single `index.html` with [Leaflet](https://leafletjs.com/) and OpenStreetMap. No backend and no real data.
 
-## Premissas (todas hipóteses a validar)
+## Assumptions (all hypotheses to validate)
 
-| Premissa | Valor padrão |
+| Assumption | Default |
 |---|---|
-| Capacidade por rota | 30 kg |
-| Máx. de paradas por rota | 8 |
-| Pagamento por rota | R$ 35 |
-| Custo de a cozinha comprar o alimento | R$ 12/kg |
-| Velocidade média | 18 km/h |
-| Tempo por parada | 5 min |
-| kg por refeição | 0,4 kg |
+| Capacity per route | 30 kg |
+| Max stops per route | 8 |
+| Pay per route | R$ 35 |
+| Kitchen's cost to buy the food | R$ 12/kg |
+| Average speed | 18 km/h |
+| Time per stop | 5 min |
+| kg per meal | 0.4 kg |
 
-Todas são editáveis na página. Restaurantes e cozinhas do exemplo são **fictícios**.
+All are editable on the page. The restaurants and kitchens in the example are **fictitious**.
 
-## Piloto que eu proporia
+## The pilot I would propose
 
-- **4 semanas**, 1 região de São Paulo, 20 restaurantes (self-service e padarias), 2 cozinhas solidárias, 2 entregadores.
-- **Manual primeiro:** formulário + planilha + este algoritmo montando as rotas.
-- **KPIs:** kg resgatados por semana · % de restaurantes que informam 3x/semana ou mais · custo por kg · ganho por hora do entregador no vale.
-- **Riscos:** segurança do alimento (a Lei 14.016/2020 protege o doador quando o alimento está próprio para consumo; protocolo: só o que não foi ao balcão, embalado e identificado), adesão dos restaurantes e custo da rota (é o que o piloto mede).
+- **4 weeks**, 1 region of São Paulo, 20 restaurants (buffets and bakeries), 2 community kitchens, 2 couriers.
+- **Manual first:** form + spreadsheet + this algorithm building the routes.
+- **KPIs:** kg rescued per week · % of restaurants reporting 3+ times a week · cost per kg · courier earnings per off-peak hour.
+- **Risks:** food safety (Brazil's Law 14,016/2020 protects donors when the food is fit for consumption; protocol: only food that never reached the counter, packed and labeled), restaurant adoption and route cost (which is what the pilot measures).
 
-## Próximos passos
+## Next steps
 
-- [ ] Geocodificar endereços em vez de clicar no mapa.
-- [ ] Usar rotas reais (OSRM) em vez de linha reta × fator.
-- [ ] Fase 2 com IA: prever, a partir do histórico, quanto cada restaurante vai sobrar e sugerir quanto produzir. Prevenir vem antes de redistribuir.
+- [ ] Geocode addresses instead of clicking on the map.
+- [ ] Use real road routes (OSRM) instead of straight line × factor.
+- [ ] Phase 2 with AI: forecast, from history, how much each restaurant will have left over and suggest how much to produce. Prevention comes before redistribution.
 
-## Como construí
+## How I built it
 
-Construído com IA a partir do case que apresentei: o Claude como agente de código, com a lógica, as premissas e os critérios definidos por mim.
+Built with AI from the case I presented: Claude as the coding agent, with the logic, assumptions and criteria defined by me.
 
 ---
 
-Feito por [Gabriela Dória](https://github.com/gabriela-doria) · Licença [MIT](LICENSE)
+Made by [Gabriela Dória](https://github.com/gabriela-doria) · [MIT](LICENSE) license
