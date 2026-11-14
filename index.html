@@ -347,7 +347,19 @@ $("btn-clear").addEventListener("click", () => { restaurantes = []; render(); })
 
 carregarExemplo();
 render();
-map.fitBounds(L.latLngBounds([...restaurantes, ...COZINHAS].map(p => [p.lat, p.lng])).pad(0.15));
+// Enquadra o mapa nos pontos. Se a página abrir antes de o mapa ter tamanho
+// (aba em segundo plano, por exemplo), tenta de novo quando ele aparecer.
+let enquadrado = false;
+function enquadrar() {
+  map.invalidateSize();
+  const tamanho = map.getSize();
+  if (enquadrado || tamanho.x === 0 || tamanho.y === 0) return;
+  map.fitBounds(L.latLngBounds([...restaurantes, ...COZINHAS].map(p => [p.lat, p.lng])).pad(0.15));
+  enquadrado = true;
+}
+enquadrar();
+window.addEventListener("load", enquadrar);
+new ResizeObserver(enquadrar).observe(document.getElementById("map"));
 </script>
 </body>
 </html>
